@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/tic_tac_toe_page.dart';
+import 'tic_tac_toe_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,4 +27,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
