@@ -16,6 +16,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
   late String currentPlayer;
   late bool gameEnd;
   late List<String> occupied;
+  late int scoreX = 0;
+  late int scoreO = 0;
 
   @override
   void initState() {
@@ -26,7 +28,12 @@ class _TicTacToePageState extends State<TicTacToePage> {
   void initializeGame() {
     currentPlayer = PLAYER_X;
     gameEnd = false;
-    occupied = ["", "", "", "", "", "", "", "", ""]; //for the 9 squares
+    occupied = ["", "", "", "", "", "", "", "", ""];//for the 9 squares
+  }
+
+  void restartScore() {
+    scoreX = 0;
+    scoreO = 0;
   }
 
   @override
@@ -38,7 +45,16 @@ class _TicTacToePageState extends State<TicTacToePage> {
           children: [
             textHeader(),
             gameBox(),
-            restartButton(),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                restartButton(),
+                restartScores(),
+              ],
+            ),
           ],
         ),
       ),
@@ -60,6 +76,14 @@ class _TicTacToePageState extends State<TicTacToePage> {
           "$currentPlayer turn",
           style: const TextStyle(color: Colors.grey,
             fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          "Player X: $scoreX | Player O: $scoreO",
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -87,7 +111,6 @@ class _TicTacToePageState extends State<TicTacToePage> {
     return InkWell(
       onTap: () {
         //on click to the box
-
         if (gameEnd || occupied[index].isNotEmpty) {
           //Returning when the game is ended or the box is already clicked
           return;
@@ -114,7 +137,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
     );
   }
 
-  restartButton() {
+  Widget restartButton() {
     return ElevatedButton(
         onPressed: () {
           setState(() {
@@ -124,6 +147,19 @@ class _TicTacToePageState extends State<TicTacToePage> {
         child: const Text(
           'Restart Game',
         ),
+    );
+  }
+
+  Widget restartScores() {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          restartScore();
+        });
+      },
+      child: const Text(
+        'Restart Scores',
+      ),
     );
   }
 
@@ -158,7 +194,15 @@ class _TicTacToePageState extends State<TicTacToePage> {
             playerPosition0 == playerPosition2) {
           //if they are all equal it means the player won
           showGameOverMessage("Player $playerPosition0 won");
+
           gameEnd = true;
+
+          if(playerPosition0 == "X"){
+            scoreX++;
+          } else if(playerPosition0 == "O"){
+            scoreO++;
+          }
+
           return;
         }
       }
@@ -192,7 +236,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
             "Game Over \n $message",
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 17,
               fontWeight: FontWeight.bold,
             ),
           )),
