@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+
 class TicTacToePage extends StatefulWidget {
   const TicTacToePage({super.key});
 
@@ -22,13 +23,14 @@ class _TicTacToePageState extends State<TicTacToePage> {
   @override
   void initState() {
     initializeGame();
+    restartScore();
     super.initState();
   }
 
   void initializeGame() {
     currentPlayer = PLAYER_X;
     gameEnd = false;
-    occupied = ["", "", "", "", "", "", "", "", ""];//for the 9 squares
+    occupied = ["", "", "", "", "", "", "", "", ""]; //for the 9 squares
   }
 
   void restartScore() {
@@ -45,16 +47,14 @@ class _TicTacToePageState extends State<TicTacToePage> {
           children: [
             textHeader(),
             gameBox(),
-            const SizedBox(
-              height: 20.0,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 restartButton(),
-                restartScores(),
+                scoresRestart(),
               ],
             ),
+
           ],
         ),
       ),
@@ -81,9 +81,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
         ),
         Text(
           "Player X: $scoreX | Player O: $scoreO",
-          style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 20,
+          style: const TextStyle(color: Colors.grey,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -111,6 +110,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
     return InkWell(
       onTap: () {
         //on click to the box
+
         if (gameEnd || occupied[index].isNotEmpty) {
           //Returning when the game is ended or the box is already clicked
           return;
@@ -150,7 +150,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
     );
   }
 
-  Widget restartScores() {
+  Widget scoresRestart() {
     return ElevatedButton(
       onPressed: () {
         setState(() {
@@ -158,7 +158,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
         });
       },
       child: const Text(
-        'Restart Scores',
+        'Restart Score',
       ),
     );
   }
@@ -195,14 +195,13 @@ class _TicTacToePageState extends State<TicTacToePage> {
           //if they are all equal it means the player won
           showGameOverMessage("Player $playerPosition0 won");
 
-          gameEnd = true;
-
-          if(playerPosition0 == "X"){
+          if(playerPosition0 == PLAYER_X){
             scoreX++;
-          } else if(playerPosition0 == "O"){
+          }if(playerPosition0 == PLAYER_O){
             scoreO++;
           }
 
+          gameEnd = true;
           return;
         }
       }
