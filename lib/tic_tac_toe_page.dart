@@ -141,11 +141,13 @@ class _TicTacToePageState extends State<TicTacToePage> {
     return ElevatedButton(
         onPressed: () {
           setState(() {
-            initializeGame();
+            gameEnd = false;
+            occupied = ["", "", "", "", "", "", "", "", ""];
+            changedTurn();
           });
         },
         child: const Text(
-          'Restart Game',
+          'Restart The Boxes',
         ),
     );
   }
