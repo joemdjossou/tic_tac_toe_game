@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class TicTacToePage extends StatefulWidget {
   const TicTacToePage({super.key});
@@ -92,8 +91,10 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   Widget gameBox() {
     return Container(
-      height: MediaQuery.of(context).size.height / 2,
-      width: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.sizeOf(context).height / 2,
+      width: MediaQuery.sizeOf(context).height / 2,
+      //by calling MediaQuery.sizeOf(context) the widget will rebuild
+      //only when the size changes, avoiding unnecessary rebuilds
       margin: const EdgeInsets.all(8),
       child: GridView.builder(
         gridDelegate:
